@@ -18,6 +18,10 @@ public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id_user;
+    
+    @ManyToOne
+    @Column(name = "id_role", nullable = false)
+    private Integer id_role;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;
