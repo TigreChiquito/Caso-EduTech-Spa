@@ -13,7 +13,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cupon {
+public class CuponModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
