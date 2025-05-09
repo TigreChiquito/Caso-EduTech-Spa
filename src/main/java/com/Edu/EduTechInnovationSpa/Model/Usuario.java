@@ -20,6 +20,7 @@ public class Usuario {
     private Integer id_user;
     
     @ManyToOne
+    //@JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @Column(name = "id_role", nullable = false)
     private Integer id_role;
 
