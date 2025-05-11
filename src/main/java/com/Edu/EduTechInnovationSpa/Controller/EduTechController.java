@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/edu")
@@ -25,12 +27,12 @@ public class EduTechController {
     @Autowired
     private CuponService cuponService;
 
-    // - - - - - - - - - - Controladores de Usuarios - - - - - - - - - - 
+    // - - - - - - - - - - Controladores de Usuarios - - - - - - - - - -
 
     @GetMapping("/Usuarios")
     public ResponseEntity<List<Usuario>> ListarUsuarios() {
-        
-        List <Usuario> usuarios = usuarioService.getAllUsers();
+
+        List<Usuario> usuarios = usuarioService.getAllUsers();
         if (usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -54,9 +56,9 @@ public class EduTechController {
 
     @PutMapping("/Usuarios/{id}")
     public ResponseEntity<Usuario> ActualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
-        try{
+        try {
 
-    Usuario user = usuarioService.getUserById(id);
+            Usuario user = usuarioService.getUserById(id);
 
             user.setFirst_name(usuario.getFirst_name());
             user.setLast_name(usuario.getLast_name());
@@ -67,13 +69,13 @@ public class EduTechController {
             Usuario usuarioActualizado = usuarioService.createUser(user);
             return ResponseEntity.ok(usuarioActualizado);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/Usuarios/{id}")
-    public ResponseEntity<?> eliminarUsuario (@PathVariable Integer id) {
+    public ResponseEntity<?> eliminarUsuario(@PathVariable Integer id) {
         try {
             usuarioService.deleteUser(id);
             return ResponseEntity.noContent().build();
@@ -82,7 +84,7 @@ public class EduTechController {
         }
     }
 
-    // - - - - - - - - - - Controladores de Curso - - - - - - - - - - 
+    // - - - - - - - - - - Controladores de Curso - - - - - - - - - -
 
     @GetMapping("/Cursos")
     public ResponseEntity<List<Curso>> ListarCursos() {
@@ -93,8 +95,8 @@ public class EduTechController {
         return ResponseEntity.ok(cursos);
     }
 
-        // - - - - - - - - - - Controladores de Cupon - - - - - - - - - -
-        
+    // - - - - - - - - - - Controladores de Cupon - - - - - - - - - -
+
     @GetMapping("/Cupon")
     public ResponseEntity<List<Cupon>> ListarCupones() {
         List<Cupon> cupones = cuponService.getAllCupons();
@@ -103,4 +105,11 @@ public class EduTechController {
         }
         return ResponseEntity.ok(cupones);
     }
+
+    // Controlador RolUsuario
+    @GetMapping("")
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+
 }
