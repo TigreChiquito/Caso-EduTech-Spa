@@ -15,11 +15,15 @@ import lombok.NoArgsConstructor;
 public class Clase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private Integer id_clase;
 
     @Column(nullable = false)
     private String nombre;
 
     @Column(nullable = false)
-    private int alumnosInscr;
+    private Integer alumnosInscr;
+
+    @Column(nullable = false)
+    private Integer id_user;
+
 }

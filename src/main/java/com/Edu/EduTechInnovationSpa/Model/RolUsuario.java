@@ -19,13 +19,14 @@ import lombok.NoArgsConstructor;
 public class RolUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_rol;
+    private Integer id_rol;
 
     @Column(nullable = false)
     private String tipo_rol;
 
     @Column(nullable = false)
     private String descripcion_rol;
+
+    @Column(nullable = false)
+    private Integer id_user;
 }
-
-
