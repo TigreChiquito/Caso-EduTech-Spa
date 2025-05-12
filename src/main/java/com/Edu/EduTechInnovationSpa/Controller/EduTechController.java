@@ -1,7 +1,9 @@
 package com.Edu.EduTechInnovationSpa.Controller;
 
+import com.Edu.EduTechInnovationSpa.Model.Clase;
 import com.Edu.EduTechInnovationSpa.Model.Cupon;
 import com.Edu.EduTechInnovationSpa.Model.Curso;
+import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
 import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
 import com.Edu.EduTechInnovationSpa.Model.Usuario;
 import com.Edu.EduTechInnovationSpa.Service.*;
@@ -32,6 +34,12 @@ public class EduTechController {
 
     @Autowired
     private RolUsuarioService rolUsuarioService;
+
+    @Autowired
+    private EvaluacionService evaluacionService;
+
+    @Autowired
+    private ClaseService claseService;
 
     // - - - - - - - - - - Controladores de Usuarios - - - - - - - - - -
 
@@ -160,6 +168,111 @@ public class EduTechController {
     public ResponseEntity<?> eliminarRol(@PathVariable Integer id) {
         try {
             rolUsuarioService.deleteRolUsuario(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    // ------- Controlador Evaluacion
+
+    @GetMapping("/Evaluacion")
+    public ResponseEntity<List<Evaluacion>> ListarEvaluacion() {
+        List<Evaluacion> evaluaciones = evaluacionService.getAllEvaluacion();
+        if (evaluaciones.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(evaluaciones);
+    }
+
+    @GetMapping("/Evaluacion/{id}")
+    public ResponseEntity<Evaluacion> obtenerEvaluacion(@PathVariable Integer id) {
+        Evaluacion evaluacion = evaluacionService.getEvaluacionById(id);
+        if (evaluacion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(evaluacion);
+    }
+
+    @PostMapping("/Evaluacion")
+    public ResponseEntity<Evaluacion> CrearEvaluacion(@RequestBody Evaluacion evaluacion) {
+        Evaluacion nuevaEvaluacion = evaluacionService.createEvaluacion(evaluacion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEvaluacion);
+    }
+
+    @PostMapping("/Evaluacion/{id}")
+    public ResponseEntity<Evaluacion> ActualizarRol(@PathVariable Integer id, @RequestBody Evaluacion evaluacion) {
+        try {
+
+            Evaluacion eva = evaluacionService.getEvaluacionById(id);
+
+            eva.setId_evaluacion(evaluacion.getId_evaluacion());
+            eva.setTitulo(evaluacion.getTitulo());
+            eva.setFechaEva(evaluacion.getFechaEva());
+            eva.setDescripcionEva(evaluacion.getDescripcionEva());
+            eva.setPuntajeObte(evaluacion.getPuntajeObte());
+            Evaluacion evaActualizada = evaluacionService.createEvaluacion(evaluacion);
+            return ResponseEntity.ok(evaActualizada);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/Evaluacion/{id}")
+    public ResponseEntity<?> eliminarEvaluacion(@PathVariable Integer id) {
+        try {
+            evaluacionService.deleteEvaluacion(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /// --------Controlador clase
+
+    @GetMapping("/Clase")
+    public ResponseEntity<List<Clase>> ListarClase() {
+        List<Clase> clases = claseService.getAllClases();
+        if (clases.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(clases);
+    }
+
+    @GetMapping("/Clase/{id}")
+    public ResponseEntity<Clase> obtenerClase(@PathVariable Integer id) {
+        Clase clase = claseService.getClaseById(id);
+        if (clase == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(clase);
+    }
+
+    @PostMapping("/Clase")
+    public ResponseEntity<Clase> CrearClase(@RequestBody Clase clase) {
+        Clase nuevaClase = claseService.createClase(clase);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaClase);
+    }
+
+    @PostMapping("/Clase/{id}")
+    public ResponseEntity<Clase> ActualizarClase(@PathVariable Integer id, @RequestBody Clase clase) {
+        try {
+
+            Clase Clas = claseService.getClaseById(id);
+
+            Clas.setId_clase(clase.getId_clase());
+            Clas.setNombre(clase.getNombre());
+            Clas.setAlumnosInscr(clase.getAlumnosInscr());
+            Clase claseActualizada = claseService.createClase(clase);
+            return ResponseEntity.ok(claseActualizada);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/Clase/{id}")
+    public ResponseEntity<?> eliminarClase(@PathVariable Integer id) {
+        try {
+            claseService.deleteClase(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

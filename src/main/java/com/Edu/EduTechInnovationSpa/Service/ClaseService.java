@@ -16,7 +16,7 @@ public class ClaseService {
     @Autowired
     private ClaseRepository claseRepository;
 
-    public List<Clase> getAllUsers() {
+    public List<Clase> getAllClases() {
         return claseRepository.findAll();
     }
 

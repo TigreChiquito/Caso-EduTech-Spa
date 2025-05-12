@@ -20,7 +20,7 @@ public class EvaluacionService {
         return evaluacionRepository.findAll();
     }
 
-    public Evaluacion creatEvaluacion(Evaluacion evaluacion) {
+    public Evaluacion createEvaluacion(Evaluacion evaluacion) {
         return evaluacionRepository.save(evaluacion);
     }
 
