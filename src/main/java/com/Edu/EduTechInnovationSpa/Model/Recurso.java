@@ -7,6 +7,8 @@ import java.util.Date;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +30,9 @@ public class Recurso {
     @Column(name="descripcion", nullable = false)
     private String descripcion;
 
-    @Column(name="id_curso", nullable = true)
-    private Integer id_curso;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
+    private Integer id_clase;
 
     @Column(name="link_recurso", nullable = false )
     private String link_recurso;
