@@ -27,8 +27,9 @@ public class Nota {
     @Column(name = "nota", nullable = false)
     private Integer nota;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
+    //@ManyToOne
+    //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
+    @Column (name = "usuario", nullable = false)
     private Usuario usuario;
 
     @Column(name = "fecha", nullable = false)
