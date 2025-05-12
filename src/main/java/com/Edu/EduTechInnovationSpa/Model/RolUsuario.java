@@ -1,5 +1,7 @@
 package com.Edu.EduTechInnovationSpa.Model;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class RolUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_rol;
+    private int id_rol;
 
     @Column(nullable = false)
     private String tipo_rol;
@@ -28,5 +30,5 @@ public class RolUsuario {
     private String descripcion_rol;
 
     @Column(nullable = false)
-    private Integer id_user;
+    private int id_user;
 }

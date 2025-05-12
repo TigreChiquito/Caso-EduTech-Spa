@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Date;
+
 
 @Entity
 @Table(name = "Evaluacion")
@@ -18,21 +20,21 @@ import lombok.NoArgsConstructor;
 public class Evaluacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_evaluacion;
+    private int id_evaluacion;
 
     @Column(nullable = false)
     private String titulo;
 
     @Column(nullable = false)
-    private Data fechaEva;
+    private Date fechaEva;
 
     @Column(nullable = false)
     private String descripcionEva;
 
     @Column(nullable = false)
-    private Integer puntajeObte;
+    private int puntajeObte;
 
     @Column(nullable = true)
-    private Integer id_nota;
+    private int id_nota;
 
 }

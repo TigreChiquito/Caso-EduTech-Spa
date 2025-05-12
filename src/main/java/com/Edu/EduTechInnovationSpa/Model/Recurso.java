@@ -33,7 +33,7 @@ public class Recurso {
     //@ManyToOne
     //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
     @Column(name = "id_clase", nullable = false)
-    private Integer id_clase;
+    private int id_clase;
 
     @Column(name="link_recurso", nullable = false )
     private String link_recurso;

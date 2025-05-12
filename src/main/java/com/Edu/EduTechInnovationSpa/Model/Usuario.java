@@ -1,11 +1,20 @@
 package com.Edu.EduTechInnovationSpa.Model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
 
 
 @Entity
@@ -17,12 +26,12 @@ public class Usuario {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_user;
+    private int id_user;
     
     //@ManyToOne
     //@JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @Column(name = "id_role", nullable = false)
-    private Integer id_role;
+    private int id_role;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;

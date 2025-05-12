@@ -17,7 +17,7 @@ public class Cupon {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_cupon;
+    private int id_cupon;
 
     @Column(name = "code", unique = true, nullable = false)
     private String code;
@@ -32,8 +32,8 @@ public class Cupon {
     private Date end_date;
 
     @Column(name = "use_limit", nullable = false)
-    private Integer use_limit;
+    private int use_limit;
 
     @Column(name = "used", nullable = false)
-    private Integer used;
+    private int used;
 }

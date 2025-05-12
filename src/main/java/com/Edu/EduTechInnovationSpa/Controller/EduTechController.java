@@ -41,6 +41,15 @@ public class EduTechController {
     @Autowired
     private ClaseService claseService;
 
+
+
+    // TEST
+
+    @GetMapping("/test")
+    public ResponseEntity<String> test() {
+        return ResponseEntity.ok("API is working");
+    }
+
     // - - - - - - - - - - Controladores de Usuarios - - - - - - - - - -
 
     @GetMapping("/Usuarios")

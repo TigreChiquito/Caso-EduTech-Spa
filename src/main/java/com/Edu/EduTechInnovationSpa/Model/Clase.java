@@ -1,5 +1,6 @@
 package com.Edu.EduTechInnovationSpa.Model;
 
+import java.util.Date;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -15,15 +16,15 @@ import lombok.NoArgsConstructor;
 public class Clase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_clase;
+    private int id_clase;
 
     @Column(nullable = false)
     private String nombre;
 
     @Column(nullable = false)
-    private Integer alumnosInscr;
+    private int alumnosInscr;
 
     @Column(nullable = false)
-    private Integer id_user;
+    private int id_user;
 
 }
