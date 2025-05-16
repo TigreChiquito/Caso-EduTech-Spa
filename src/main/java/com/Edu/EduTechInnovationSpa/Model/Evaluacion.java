@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,8 +33,20 @@ public class Evaluacion {
     @Column(nullable = false)
     private String descripcionEva;
 
-
     @Column(nullable = true)
     private int id_nota;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
+    private Usuario id_usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "id_Nota", referencedColumnName = "id_nota",nullable=false)
+    private Nota id_Nota;
+
+    @ManyToOne
+    @JoinColumn(name = "idSeccion", referencedColumnName = "id_seccion", nullable = false)
+    private Seccion idSeccion;
+
 
 }
