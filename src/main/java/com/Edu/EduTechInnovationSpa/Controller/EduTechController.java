@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EduTechController {
 
     @Autowired
-    private SeccionService cursoService;
+    private SeccionService seccionService;
 
     @Autowired
     private UserService usuarioService;
@@ -106,15 +106,15 @@ public class EduTechController {
         }
     }
 
-    // - - - - - - - - - - Controladores de Curso - - - - - - - - - -
+    // - - - - - - - - - - Controladores de Seccion - - - - - - - - - -
 
-    @GetMapping("/Cursos")
+    @GetMapping("/Secciones")
     public ResponseEntity<List<Seccion>> ListarCursos() {
-        List<Seccion> cursos = cursoService.getAllCursos();
-        if (cursos.isEmpty()) {
+        List<Seccion> secciones = seccionService.getAllCursos();
+        if (secciones.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(cursos);
+        return ResponseEntity.ok(secciones);
     }
 
     // - - - - - - - - - - Controladores de Cupon - - - - - - - - - -
@@ -132,7 +132,7 @@ public class EduTechController {
 
     @GetMapping("/RolUsuario")
     public ResponseEntity<List<RolUsuario>> ListarRoles() {
-        List<RolUsuario> rolUsuarios = rolUsuarioService.getAllUsers();
+        List<RolUsuario> rolUsuarios = rolUsuarioService.getAllRoles();
         if (rolUsuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -151,7 +151,7 @@ public class EduTechController {
 
     @PostMapping("/RolUsuario")
     public ResponseEntity<RolUsuario> CrearRol(@RequestBody RolUsuario rolUsuario) {
-        RolUsuario nuevoRolUsuario = rolUsuarioService.createRolUsuario(rolUsuario);
+        RolUsuario nuevoRolUsuario = rolUsuarioService.createRol(rolUsuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoRolUsuario);
     }
 
@@ -164,7 +164,7 @@ public class EduTechController {
             rolUser.setId_rol(rolUsuario.getId_rol());
             rolUser.setNombre_rol(rolUsuario.getNombre_rol());
             rolUser.setDescripcion_rol(rolUsuario.getDescripcion_rol());
-            RolUsuario rolActualizado = rolUsuarioService.createRolUsuario(rolUser);
+            RolUsuario rolActualizado = rolUsuarioService.createRol(rolUser);
             return ResponseEntity.ok(rolActualizado);
 
         } catch (Exception e) {
@@ -175,7 +175,7 @@ public class EduTechController {
     @DeleteMapping("/RolUsuario/{id}")
     public ResponseEntity<?> eliminarRol(@PathVariable Integer id) {
         try {
-            rolUsuarioService.deleteRolUsuario(id);
+            rolUsuarioService.deleteRol(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
