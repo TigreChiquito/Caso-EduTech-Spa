@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class EduTechController {
 
     @Autowired
-    private CursoService cursoService;
+    private SeccionService cursoService;
 
     @Autowired
     private UserService usuarioService;
