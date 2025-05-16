@@ -16,7 +16,7 @@ public class RolUsuarioService {
     @Autowired
     private RolUsuarioRepository rolUsuarioRepository;
 
-    public List<RolUsuario> getAllUsers() {
+    public List<RolUsuario> getAllRoles() {
         return rolUsuarioRepository.findAll();
     }
 
@@ -24,11 +24,11 @@ public class RolUsuarioService {
         return rolUsuarioRepository.findById(id).orElse(null);
     }
 
-    public RolUsuario createRolUsuario(RolUsuario rolUsuario) {
+    public RolUsuario createRol(RolUsuario rolUsuario) {
         return rolUsuarioRepository.save(rolUsuario);
     }
 
-    public void deleteRolUsuario(Integer id) {
+    public void deleteRol(Integer id) {
         rolUsuarioRepository.deleteById(id);
     }
 

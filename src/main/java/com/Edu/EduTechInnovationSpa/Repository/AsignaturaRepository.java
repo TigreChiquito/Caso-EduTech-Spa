@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.Edu.EduTechInnovationSpa.Model.Asignatura;
 
 @Repository
-public interface ClaseRepository extends JpaRepository<Asignatura, Integer> {
+public interface AsignaturaRepository extends JpaRepository<Asignatura, Integer> {
 
 }

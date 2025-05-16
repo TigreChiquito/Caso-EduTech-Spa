@@ -39,7 +39,7 @@ public class EduTechController {
     private EvaluacionService evaluacionService;
 
     @Autowired
-    private ClaseService claseService;
+    private AsignaturaService claseService;
 
 
 
