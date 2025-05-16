@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import com.Edu.EduTechInnovationSpa.Model.Seccion;
 
 @Repository
-public interface CursoRepository extends JpaRepository<Seccion, Integer> {
+public interface SeccionRepository extends JpaRepository<Seccion, Integer> {
 }
