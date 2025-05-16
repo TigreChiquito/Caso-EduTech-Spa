@@ -1,8 +1,8 @@
 package com.Edu.EduTechInnovationSpa.Controller;
 
-import com.Edu.EduTechInnovationSpa.Model.Clase;
+import com.Edu.EduTechInnovationSpa.Model.Asignatura;
 import com.Edu.EduTechInnovationSpa.Model.Cupon;
-import com.Edu.EduTechInnovationSpa.Model.Curso;
+import com.Edu.EduTechInnovationSpa.Model.Seccion;
 import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
 import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
 import com.Edu.EduTechInnovationSpa.Model.Usuario;
@@ -110,8 +110,8 @@ public class EduTechController {
     // - - - - - - - - - - Controladores de Curso - - - - - - - - - -
 
     @GetMapping("/Cursos")
-    public ResponseEntity<List<Curso>> ListarCursos() {
-        List<Curso> cursos = cursoService.getAllCursos();
+    public ResponseEntity<List<Seccion>> ListarCursos() {
+        List<Seccion> cursos = cursoService.getAllCursos();
         if (cursos.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -239,8 +239,8 @@ public class EduTechController {
     /// --------Controlador clase
 
     @GetMapping("/Clase")
-    public ResponseEntity<List<Clase>> ListarClase() {
-        List<Clase> clases = claseService.getAllClases();
+    public ResponseEntity<List<Asignatura>> ListarClase() {
+        List<Asignatura> clases = claseService.getAllClases();
         if (clases.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -248,8 +248,8 @@ public class EduTechController {
     }
 
     @GetMapping("/Clase/{id}")
-    public ResponseEntity<Clase> obtenerClase(@PathVariable Integer id) {
-        Clase clase = claseService.getClaseById(id);
+    public ResponseEntity<Asignatura> obtenerClase(@PathVariable Integer id) {
+        Asignatura clase = claseService.getClaseById(id);
         if (clase == null) {
             return ResponseEntity.notFound().build();
         }
@@ -257,21 +257,21 @@ public class EduTechController {
     }
 
     @PostMapping("/Clase")
-    public ResponseEntity<Clase> CrearClase(@RequestBody Clase clase) {
-        Clase nuevaClase = claseService.createClase(clase);
+    public ResponseEntity<Asignatura> CrearClase(@RequestBody Asignatura clase) {
+        Asignatura nuevaClase = claseService.createClase(clase);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaClase);
     }
 
     @PostMapping("/Clase/{id}")
-    public ResponseEntity<Clase> ActualizarClase(@PathVariable Integer id, @RequestBody Clase clase) {
+    public ResponseEntity<Asignatura> ActualizarClase(@PathVariable Integer id, @RequestBody Asignatura clase) {
         try {
 
-            Clase Clas = claseService.getClaseById(id);
+            Asignatura Clas = claseService.getClaseById(id);
 
             Clas.setId_clase(clase.getId_clase());
             Clas.setNombre(clase.getNombre());
             Clas.setAlumnosInscr(clase.getAlumnosInscr());
-            Clase claseActualizada = claseService.createClase(clase);
+            Asignatura claseActualizada = claseService.createClase(clase);
             return ResponseEntity.ok(claseActualizada);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

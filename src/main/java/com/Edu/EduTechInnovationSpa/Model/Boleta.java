@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,20 +30,23 @@ public class Boleta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_boleta;
 
-    @Column(name = "id_usuario", nullable = false)
-    private String id_usuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
+    private Usuario id_usuario;
 
 
-    @Column(name = "id_curso", nullable = false)
-    private String id_curso;
+    @ManyToOne
+    @JoinColumn(name = "id_asignatura", referencedColumnName = "id_asignatura", nullable = false)
+    private Asignatura id_asignatura;
 
 
     @Column(name = "fecha", nullable = false)
     private Date fecha;
 
 
-    @Column(name= "code", nullable = true)
-    private String code;
+    @ManyToOne
+    @JoinColumn(name = "cupon", referencedColumnName = "id_cupon", nullable = false)
+    private Cupon cupon;
 
         
     @Column(name = "monto_total", nullable = false)

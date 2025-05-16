@@ -27,22 +27,20 @@ public class Recurso {
     @Id
     private Integer id_recurso;
 
-    @Column(name="descripcion", nullable = false)
-    private String descripcion;
+    @Column(name="nombre", nullable = false)
+    private String nombre;
 
     //@ManyToOne
     //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
-    @Column(name = "id_clase", nullable = false)
-    private int id_clase;
+    @Column(name = "id_asignatura", nullable = false)
+    private int id_asignatura;
 
-    @Column(name="link_recurso", nullable = false )
-    private String link_recurso;
+    @Column(name="vinculo_recurso", nullable = false )
+    private String vinculo_recurso;
 
     @Column(name= "fecha", nullable = false)
     private Date fecha;
 
-    @Column(name="tipo_recurso", nullable = false)  
-    private String tipo_recurso;
 
 
 

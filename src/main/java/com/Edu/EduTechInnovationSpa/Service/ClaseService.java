@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.Edu.EduTechInnovationSpa.Model.Clase;
+import com.Edu.EduTechInnovationSpa.Model.Asignatura;
 import com.Edu.EduTechInnovationSpa.Repository.ClaseRepository;
 
 import jakarta.transaction.Transactional;
@@ -16,15 +16,15 @@ public class ClaseService {
     @Autowired
     private ClaseRepository claseRepository;
 
-    public List<Clase> getAllClases() {
+    public List<Asignatura> getAllClases() {
         return claseRepository.findAll();
     }
 
-    public Clase getClaseById(Integer id) {
+    public Asignatura getClaseById(Integer id) {
         return claseRepository.findById(id).orElse(null);
     }
 
-    public Clase createClase(Clase clase) {
+    public Asignatura createClase(Asignatura clase) {
         return claseRepository.save(clase);
     }
 

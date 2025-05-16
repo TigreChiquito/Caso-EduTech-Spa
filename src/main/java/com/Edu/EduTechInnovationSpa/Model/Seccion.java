@@ -9,15 +9,15 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "curso")
+@Table(name = "Seccion")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Curso {
+public class Seccion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_curso;
+    private int id_seccion;
 
     @Column(name = "nombre", nullable = false)
     private String nombre;

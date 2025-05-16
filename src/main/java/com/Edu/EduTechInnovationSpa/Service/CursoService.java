@@ -1,6 +1,6 @@
 package com.Edu.EduTechInnovationSpa.Service;
 
-import com.Edu.EduTechInnovationSpa.Model.Curso;
+import com.Edu.EduTechInnovationSpa.Model.Seccion;
 import com.Edu.EduTechInnovationSpa.Repository.CursoRepository;
 
 import org.springframework.stereotype.Service;
@@ -16,15 +16,15 @@ public class CursoService {
     @Autowired
     private CursoRepository cursoRepository;
 
-    public List<Curso> getAllCursos() {
+    public List<Seccion> getAllCursos() {
         return cursoRepository.findAll();
     }
 
-    public Curso getCursoById(Integer id) {
+    public Seccion getCursoById(Integer id) {
         return cursoRepository.findById(id).orElse(null);
     }
 
-    public Curso createCurso(Curso curso) {
+    public Seccion createCurso(Seccion curso) {
         return cursoRepository.save(curso);
     }
 

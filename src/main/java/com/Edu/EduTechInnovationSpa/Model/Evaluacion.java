@@ -31,8 +31,7 @@ public class Evaluacion {
     @Column(nullable = false)
     private String descripcionEva;
 
-    @Column(nullable = false)
-    private int puntajeObte;
+
 
     @Column(nullable = true)
     private int id_nota;

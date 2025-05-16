@@ -27,10 +27,9 @@ public class Nota {
 
     //@ManyToOne
     //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
-    @Column (name = "usuario", nullable = false)
-    private String usuario;
+    @Column (name = "descripcion", nullable = false)
+    private String descripcion;
 
-    @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    
 
 }

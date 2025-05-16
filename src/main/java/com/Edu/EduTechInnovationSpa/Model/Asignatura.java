@@ -9,14 +9,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Clase")
+@Table(name = "Asignatura")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Clase {
+public class Asignatura {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_clase;
+    private int id_asignatura;
 
     @Column(nullable = false)
     private String nombre;
