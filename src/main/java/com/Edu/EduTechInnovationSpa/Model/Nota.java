@@ -24,8 +24,6 @@ public class Nota {
     @Column(name = "nota", nullable = false)
     private int nota;
 
-    //@ManyToOne
-    //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
     @Column (name = "descripcion", nullable = false)
     private String descripcion;
 

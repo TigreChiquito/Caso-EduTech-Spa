@@ -6,29 +6,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.Edu.EduTechInnovationSpa.Model.Asignatura;
-import com.Edu.EduTechInnovationSpa.Repository.ClaseRepository;
+import com.Edu.EduTechInnovationSpa.Repository.AsignaturaRepository;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
-public class ClaseService {
+public class AsignaturaService {
     @Autowired
-    private ClaseRepository claseRepository;
+    private AsignaturaRepository claseRepository;
 
-    public List<Asignatura> getAllClases() {
+    public List<Asignatura> getAllAsignaturas() {
         return claseRepository.findAll();
     }
 
-    public Asignatura getClaseById(Integer id) {
+    public Asignatura getAsignaturaById(Integer id) {
         return claseRepository.findById(id).orElse(null);
     }
 
-    public Asignatura createClase(Asignatura clase) {
+    public Asignatura createAsignatura(Asignatura clase) {
         return claseRepository.save(clase);
     }
 
-    public void deleteClase(Integer id) {
+    public void deleteAsignatura(Integer id) {
         claseRepository.deleteById(id);
     }
 }
