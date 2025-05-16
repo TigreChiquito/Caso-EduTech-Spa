@@ -30,10 +30,9 @@ public class Recurso {
     @Column(name="nombre", nullable = false)
     private String nombre;
 
-    //@ManyToOne
-    //@JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
-    @Column(name = "id_asignatura", nullable = false)
-    private int id_asignatura;
+    @ManyToOne
+    @JoinColumn(name = "asignatura", referencedColumnName = "id_asignatura")
+    private Asignatura asignatura;
 
     @Column(name="vinculo_recurso", nullable = false )
     private String vinculo_recurso;

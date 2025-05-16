@@ -1,6 +1,5 @@
 package com.Edu.EduTechInnovationSpa.Model;
 
-import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -85,7 +84,7 @@ public class EduTechController {
 
             user.setFirst_name(usuario.getFirst_name());
             user.setLast_name(usuario.getLast_name());
-            user.setId_role(usuario.getId_role());
+            user.setRol(usuario.getRol());
             user.setRun(usuario.getRun());
             user.setEmail(usuario.getEmail());
             user.setBirthdate(usuario.getBirthdate());
@@ -163,7 +162,7 @@ public class EduTechController {
             RolUsuario rolUser = rolUsuarioService.getRolById(id);
 
             rolUser.setId_rol(rolUsuario.getId_rol());
-            rolUser.setTipo_rol(rolUsuario.getTipo_rol());
+            rolUser.setNombre_rol(rolUsuario.getNombre_rol());
             rolUser.setDescripcion_rol(rolUsuario.getDescripcion_rol());
             RolUsuario rolActualizado = rolUsuarioService.createRolUsuario(rolUser);
             return ResponseEntity.ok(rolActualizado);
