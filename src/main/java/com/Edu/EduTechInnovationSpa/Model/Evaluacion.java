@@ -32,7 +32,6 @@ public class Evaluacion {
     private String descripcionEva;
 
 
-
     @Column(nullable = true)
     private int id_nota;
 

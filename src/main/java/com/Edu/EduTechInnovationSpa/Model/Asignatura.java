@@ -22,9 +22,9 @@ public class Asignatura {
     private String nombre;
 
     @Column(nullable = false)
-    private int alumnosInscr;
+    private String descripcion;
 
     @Column(nullable = false)
-    private int id_user;
+    private float costo;
 
 }

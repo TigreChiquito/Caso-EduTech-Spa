@@ -24,11 +24,10 @@ public class RolUsuario {
     private int id_rol;
 
     @Column(nullable = false)
-    private String tipo_rol;
+    private String nombre_rol;
 
     @Column(nullable = false)
     private String descripcion_rol;
 
-    @Column(nullable = false)
-    private int id_user;
+
 }

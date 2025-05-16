@@ -19,11 +19,8 @@ public class Seccion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_seccion;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "descripcion", nullable = false)
-    private String descripcion;
+    @Column(name = "cupos", nullable = false)
+    private int cupos;
 
     @Column(name = "docente", nullable = false)
     private String docente;
@@ -31,9 +28,12 @@ public class Seccion {
     @Column(name = "fecha_inicio", nullable = false)
     private Date fecha_inicio;
 
+
     @Column(name = "fecha_termino", nullable = false)
     private Date fecha_termino;
 
-    @Column(name = "valor", nullable = false)
-    private float valor;
+    @ManyToOne
+    @JoinColumn(name = "id_asignatura", referencedColumnName = "id_asignatura", nullable = false)
+    private Asignatura asignatura;
+    
 }

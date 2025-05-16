@@ -32,12 +32,12 @@ public class Boleta {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
-    private Usuario id_usuario;
+    private Usuario usuario;
 
 
     @ManyToOne
     @JoinColumn(name = "id_asignatura", referencedColumnName = "id_asignatura", nullable = false)
-    private Asignatura id_asignatura;
+    private Asignatura asignatura;
 
 
     @Column(name = "fecha", nullable = false)
