@@ -277,10 +277,10 @@ public class EduTechController {
         }
     }
 
-    @DeleteMapping("/Clase/{id}")
-    public ResponseEntity<?> eliminarClase(@PathVariable Integer id) {
+    @DeleteMapping("/Asignatura/{id}")
+    public ResponseEntity<?> eliminarAsignatura(@PathVariable Integer id) {
         try {
-            claseService.deleteClase(id);
+            asignaturaService.deleteAsignatura(id);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

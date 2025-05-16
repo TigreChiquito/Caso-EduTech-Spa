@@ -14,21 +14,21 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class AsignaturaService {
     @Autowired
-    private AsignaturaRepository claseRepository;
+    private AsignaturaRepository asignaturaRepository;
 
     public List<Asignatura> getAllAsignaturas() {
-        return claseRepository.findAll();
+        return asignaturaRepository.findAll();
     }
 
     public Asignatura getAsignaturaById(Integer id) {
-        return claseRepository.findById(id).orElse(null);
+        return asignaturaRepository.findById(id).orElse(null);
     }
 
-    public Asignatura createAsignatura(Asignatura clase) {
-        return claseRepository.save(clase);
+    public Asignatura createAsignatura(Asignatura asignatura) {
+        return asignaturaRepository.save(asignatura);
     }
 
     public void deleteAsignatura(Integer id) {
-        claseRepository.deleteById(id);
+        asignaturaRepository.deleteById(id);
     }
 }
