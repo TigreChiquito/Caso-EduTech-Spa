@@ -16,7 +16,7 @@ public class SeccionService {
     @Autowired
     private SeccionRepository seccionRepository;
 
-    public List<Seccion> getAllCursos() {
+    public List<Seccion> getAllSeccions() {
         return seccionRepository.findAll();
     }
 
@@ -31,5 +31,5 @@ public class SeccionService {
     public void deleteSeccion(Integer id) {
         seccionRepository.deleteById(id);
     }
-    
+
 }

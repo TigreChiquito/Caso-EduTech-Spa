@@ -10,6 +10,7 @@ import com.Edu.EduTechInnovationSpa.Service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/edu")
@@ -38,9 +40,10 @@ public class EduTechController {
     private EvaluacionService evaluacionService;
 
     @Autowired
-    private AsignaturaService claseService;
+    private AsignaturaService asignaturaService;
 
-
+    @Autowired
+    private BoletaService boletaService;
 
     // TEST
 
@@ -110,11 +113,55 @@ public class EduTechController {
 
     @GetMapping("/Secciones")
     public ResponseEntity<List<Seccion>> ListarCursos() {
-        List<Seccion> secciones = seccionService.getAllCursos();
+        List<Seccion> secciones = seccionService.getAllSeccions();
         if (secciones.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(secciones);
+    }
+
+    @GetMapping("/Secciones/{id}")
+    public ResponseEntity<Seccion> getSecciones(@PathVariable int id) {
+        Seccion seccion = seccionService.getSeccionById(id);
+        if (seccion == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(seccion);
+
+    }
+
+    @PostMapping("/Seccion")
+    public ResponseEntity<Seccion> CrearSeccion(@RequestBody Seccion seccion) {
+        Seccion newSeccion = seccionService.createSeccion(seccion);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newSeccion);
+    }
+
+    @PostMapping("/Seccion/{id}")
+    public ResponseEntity<Seccion> updateSeccion(@PathVariable int id, @RequestBody Seccion seccion) {
+        try {
+
+            Seccion secc = seccionService.getSeccionById(id);
+
+            secc.setCupos(seccion.getCupos());
+            secc.setDocente(seccion.getDocente());
+            secc.setFecha_inicio(seccion.getFecha_inicio());
+            secc.setFecha_termino(seccion.getFecha_termino());
+            Seccion seccionUpd = seccionService.createSeccion(secc);
+            return ResponseEntity.ok(seccionUpd);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    @DeleteMapping("/Seccion/{id}")
+    public ResponseEntity<?> eliminarSeccion(@PathVariable int id) {
+        try {
+            seccionService.deleteSeccion(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     // - - - - - - - - - - Controladores de Cupon - - - - - - - - - -
@@ -217,7 +264,7 @@ public class EduTechController {
             eva.setTitulo(evaluacion.getTitulo());
             eva.setFechaEva(evaluacion.getFechaEva());
             eva.setDescripcionEva(evaluacion.getDescripcionEva());
-            eva.setPuntajeObte(evaluacion.getPuntajeObte());
+            eva.setPuntajeMax(evaluacion.getPuntajeMax());
             Evaluacion evaActualizada = evaluacionService.createEvaluacion(evaluacion);
             return ResponseEntity.ok(evaActualizada);
         } catch (Exception e) {
@@ -235,43 +282,44 @@ public class EduTechController {
         }
     }
 
-    /// --------Controlador clase
+    /// --------Controlador asignatura
 
-    @GetMapping("/Clase")
-    public ResponseEntity<List<Asignatura>> ListarClase() {
-        List<Asignatura> clases = claseService.getAllClases();
-        if (clases.isEmpty()) {
+    @GetMapping("/Asignatura")
+    public ResponseEntity<List<Asignatura>> ListarAsignatura() {
+        List<Asignatura> asignaturas = asignaturaService.getAllAsignaturas();
+        if (asignaturas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(clases);
+        return ResponseEntity.ok(asignaturas);
     }
 
-    @GetMapping("/Clase/{id}")
-    public ResponseEntity<Asignatura> obtenerClase(@PathVariable Integer id) {
-        Asignatura clase = claseService.getClaseById(id);
-        if (clase == null) {
+    @GetMapping("/Asignatura/{id}")
+    public ResponseEntity<Asignatura> getAsignatura(@PathVariable Integer id) {
+        Asignatura asignatura = asignaturaService.getAsignaturaById(id);
+        if (asignatura == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(clase);
+        return ResponseEntity.ok(asignatura);
     }
 
-    @PostMapping("/Clase")
-    public ResponseEntity<Asignatura> CrearClase(@RequestBody Asignatura clase) {
-        Asignatura nuevaClase = claseService.createClase(clase);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaClase);
+    @PostMapping("/Asignatura")
+    public ResponseEntity<Asignatura> CrearAsignatura(@RequestBody Asignatura asignatura) {
+        Asignatura nuevaAsignatura = asignaturaService.createAsignatura(asignatura);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaAsignatura);
     }
 
-    @PostMapping("/Clase/{id}")
-    public ResponseEntity<Asignatura> ActualizarClase(@PathVariable Integer id, @RequestBody Asignatura clase) {
+    @PostMapping("/Asignatura/{id}")
+    public ResponseEntity<Asignatura> ActualizarAsignatura(@PathVariable Integer id,
+            @RequestBody Asignatura asignatura) {
         try {
 
-            Asignatura Clas = claseService.getClaseById(id);
+            Asignatura Asig = asignaturaService.getAsignaturaById(id);
 
-            Clas.setId_clase(clase.getId_clase());
-            Clas.setNombre(clase.getNombre());
-            Clas.setAlumnosInscr(clase.getAlumnosInscr());
-            Asignatura claseActualizada = claseService.createClase(clase);
-            return ResponseEntity.ok(claseActualizada);
+            Asig.setId_asignatura(asignatura.getId_asignatura());
+            Asig.setNombre(asignatura.getNombre());
+            Asig.setCosto(asignatura.getCosto());
+            Asignatura asignaActualizada = asignaturaService.createAsignatura(asignatura);
+            return ResponseEntity.ok(asignaActualizada);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }

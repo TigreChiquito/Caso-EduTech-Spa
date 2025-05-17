@@ -18,22 +18,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
 @Table(name = "user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Usuario {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_user;
-    
-    //@ManyToOne
-    //@JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @Column(name = "id_role", nullable = false)
-    private int id_role;
 
     @Column(name = "first_name", nullable = false)
     private String first_name;
