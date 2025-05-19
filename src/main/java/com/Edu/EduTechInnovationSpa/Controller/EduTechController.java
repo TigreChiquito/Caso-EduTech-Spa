@@ -1,24 +1,33 @@
 package com.Edu.EduTechInnovationSpa.Controller;
 
-import com.Edu.EduTechInnovationSpa.Model.Asignatura;
-import com.Edu.EduTechInnovationSpa.Model.Cupon;
-import com.Edu.EduTechInnovationSpa.Model.Seccion;
-import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
-import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
-import com.Edu.EduTechInnovationSpa.Model.Usuario;
-import com.Edu.EduTechInnovationSpa.Service.*;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.Edu.EduTechInnovationSpa.Model.Asignatura;
+import com.Edu.EduTechInnovationSpa.Model.Boleta;
+import com.Edu.EduTechInnovationSpa.Model.Cupon;
+import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
+import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
+import com.Edu.EduTechInnovationSpa.Model.Seccion;
+import com.Edu.EduTechInnovationSpa.Model.Usuario;
+import com.Edu.EduTechInnovationSpa.Service.AsignaturaService;
+import com.Edu.EduTechInnovationSpa.Service.BoletaService;
+import com.Edu.EduTechInnovationSpa.Service.CuponService;
+import com.Edu.EduTechInnovationSpa.Service.EvaluacionService;
+import com.Edu.EduTechInnovationSpa.Service.RolUsuarioService;
+import com.Edu.EduTechInnovationSpa.Service.SeccionService;
+import com.Edu.EduTechInnovationSpa.Service.UserService;
 
 @RestController
 @RequestMapping("/api/v1/edu")
@@ -334,5 +343,71 @@ public class EduTechController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
+
+    /// --------Controlador Boleta
+    
+
+    @GetMapping("/Boleta")
+    public ResponseEntity<List<Boleta>> ListarBoletas() {
+        List<Boleta> boletas = boletaService.getAllBoletas();
+        if (boletas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(boletas);
+    }
+
+
+    @GetMapping("/Boleta/{id}")
+    public ResponseEntity<Boleta> ObtenerBoleta(@PathVariable Integer id) {
+        Boleta boleta = boletaService.getBoletaById(id);
+        if (boleta == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(boleta);
+    }       
+ 
+    @PostMapping("/Boleta") 
+    public ResponseEntity<Boleta> CrearBoleta(@RequestBody Boleta boleta) {
+        Boleta nuevaBoleta = boletaService.createBoleta(boleta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaBoleta);
+    }   
+
+
+    @PostMapping("/Boleta/{id}")
+    public ResponseEntity<Boleta> ActualizarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
+        try {
+
+            Boleta bol = boletaService.getBoletaById(id);
+
+            bol.setId_boleta(boleta.getId_boleta());
+            bol.setUsuario(boleta.getUsuario());
+            bol.setAsignatura(boleta.getAsignatura());
+            bol.setFecha(boleta.getFecha());
+            bol.setCupon(boleta.getCupon());
+            bol.setMonto_total(boleta.getMonto_total());
+            Boleta boletaActualizada = boletaService.createBoleta(boleta);
+            return ResponseEntity.ok(boletaActualizada);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/Boleta/{id}")
+    public ResponseEntity<?> eliminarBoleta(@PathVariable Integer id) {
+        try {
+            boletaService.deleteBoleta(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    
+
+
+
 
 }
