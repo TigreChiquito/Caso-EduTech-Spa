@@ -257,8 +257,19 @@ public class EduTechController {
         return ResponseEntity.ok(evaluacion);
     }
 
-    @PostMapping("/Evaluacion")
-    public ResponseEntity<Evaluacion> CrearEvaluacion(@RequestBody Evaluacion evaluacion) {
+    @PostMapping("/{id_user}/Evaluacion")
+    public ResponseEntity<Evaluacion> CrearEvaluacion(@PathVariable Integer id_user, @RequestBody Evaluacion evaluacion) {
+        
+        Usuario usuario = usuarioService.getUserById(id_user);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        
+        // verificar que el usuario tenga rol de administrador o docente
+        if (!usuario.getRol().getNombre_rol().equals("Administrador") || !usuario.getRol().getNombre_rol().equals("Docente")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        
         Evaluacion nuevaEvaluacion = evaluacionService.createEvaluacion(evaluacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEvaluacion);
     }
@@ -291,7 +302,7 @@ public class EduTechController {
         }
     }
 
-    /// --------Controlador asignatura
+    /// --------Controlador asignatura ( Actualizados )
 
     @GetMapping("/Asignatura")
     public ResponseEntity<List<Asignatura>> ListarAsignatura() {
@@ -311,18 +322,35 @@ public class EduTechController {
         return ResponseEntity.ok(asignatura);
     }
 
-    @PostMapping("/Asignatura")
-    public ResponseEntity<Asignatura> CrearAsignatura(@RequestBody Asignatura asignatura) {
+    @PostMapping("/{id_user}/Asignatura")
+    public ResponseEntity<Asignatura> CrearAsignatura(@PathVariable Integer id_user, @RequestBody Asignatura asignatura) {
+        Usuario usuario = usuarioService.getUserById(id_user);
+        if (usuario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        // verificar que el usuario tenga rol de administrador
+        if (!usuario.getRol().getNombre_rol().equals("Administrador")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
         Asignatura nuevaAsignatura = asignaturaService.createAsignatura(asignatura);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaAsignatura);
     }
 
-    @PostMapping("/Asignatura/{id}")
-    public ResponseEntity<Asignatura> ActualizarAsignatura(@PathVariable Integer id,
-            @RequestBody Asignatura asignatura) {
+    @PostMapping("/{id_user}/Asignatura/{id_asignatura}")
+    public ResponseEntity<Asignatura> ActualizarAsignatura(@PathVariable Integer id_user, @PathVariable Integer id_asignatura, @RequestBody Asignatura asignatura) {
         try {
 
-            Asignatura Asig = asignaturaService.getAsignaturaById(id);
+            Usuario usuario = usuarioService.getUserById(id_user);
+            if (usuario == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            // verificar que el usuario tenga rol de administrador
+            if (!usuario.getRol().getNombre_rol().equals("Administrador")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            }
+
+            Asignatura Asig = asignaturaService.getAsignaturaById(id_asignatura);
 
             Asig.setId_asignatura(asignatura.getId_asignatura());
             Asig.setNombre(asignatura.getNombre());
@@ -334,17 +362,26 @@ public class EduTechController {
         }
     }
 
-    @DeleteMapping("/Asignatura/{id}")
-    public ResponseEntity<?> eliminarAsignatura(@PathVariable Integer id) {
+    @DeleteMapping("/{id_user}/Asignatura/{id_asignatura}")
+    public ResponseEntity<?> eliminarAsignatura(@PathVariable Integer id_user, @PathVariable Integer id_asignatura) {
         try {
-            asignaturaService.deleteAsignatura(id);
+
+            Usuario usuario = usuarioService.getUserById(id_user);
+            if (usuario == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            
+            // verificar que el usuario tenga rol de administrador
+            if (!usuario.getRol().getNombre_rol().equals("Administrador")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            }
+
+            asignaturaService.deleteAsignatura(id_asignatura);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
-
-
 
 
     /// --------Controlador Boleta
@@ -368,7 +405,7 @@ public class EduTechController {
         }
         return ResponseEntity.ok(boleta);
     }       
- 
+
     @PostMapping("/Boleta") 
     public ResponseEntity<Boleta> CrearBoleta(@RequestBody Boleta boleta) {
         Boleta nuevaBoleta = boletaService.createBoleta(boleta);

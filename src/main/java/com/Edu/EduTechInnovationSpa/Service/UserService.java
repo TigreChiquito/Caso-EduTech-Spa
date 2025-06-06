@@ -24,6 +24,15 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    // saber el rol que tiene un usuario
+    public String getUserRole(Integer id) {
+        Usuario user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            return user.getRol() != null ? user.getRol().toString() : null;
+        }
+        return null;
+    }
+
     public Usuario createUser(Usuario user) {
         return userRepository.save(user);
     }
