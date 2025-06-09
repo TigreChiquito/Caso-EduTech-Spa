@@ -260,25 +260,33 @@ public class EduTechController {
     @PostMapping("/{id_user}/Evaluacion")
     public ResponseEntity<Evaluacion> CrearEvaluacion(@PathVariable Integer id_user, @RequestBody Evaluacion evaluacion) {
         
-        Usuario usuario = usuarioService.getUserById(id_user);
-        if (usuario == null) {
+        if(!usuarioService.userExist(id_user)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         
         // verificar que el usuario tenga rol de administrador o docente
-        if (!usuario.getRol().getNombre_rol().equals("Administrador") || !usuario.getRol().getNombre_rol().equals("Docente")) {
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
+        }  
         
         Evaluacion nuevaEvaluacion = evaluacionService.createEvaluacion(evaluacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEvaluacion);
     }
 
-    @PostMapping("/Evaluacion/{id}")
-    public ResponseEntity<Evaluacion> ActualizarRol(@PathVariable Integer id, @RequestBody Evaluacion evaluacion) {
+    @PostMapping("/{id_user}/Evaluacion/{id}")
+    public ResponseEntity<Evaluacion> ActualizarRol(@PathVariable Integer id_user, @PathVariable Integer id_evaluacion, @RequestBody Evaluacion evaluacion) {
         try {
-
-            Evaluacion eva = evaluacionService.getEvaluacionById(id);
+        
+        if(!usuarioService.userExist(id_user)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        
+        // verificar que el usuario tenga rol de administrador o docente
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }  
+        
+            Evaluacion eva = evaluacionService.getEvaluacionById(id_evaluacion);
 
             eva.setId_evaluacion(evaluacion.getId_evaluacion());
             eva.setTitulo(evaluacion.getTitulo());
@@ -292,10 +300,20 @@ public class EduTechController {
         }
     }
 
-    @DeleteMapping("/Evaluacion/{id}")
-    public ResponseEntity<?> eliminarEvaluacion(@PathVariable Integer id) {
+    @DeleteMapping("/{id_user}/Evaluacion/{id}")
+    public ResponseEntity<?> eliminarEvaluacion(@PathVariable Integer id_user, @PathVariable Integer id_evaluacion) {
         try {
-            evaluacionService.deleteEvaluacion(id);
+        
+        if(!usuarioService.userExist(id_user)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        
+        // verificar que el usuario tenga rol de administrador o docente
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        } 
+            
+            evaluacionService.deleteEvaluacion(id_evaluacion);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
