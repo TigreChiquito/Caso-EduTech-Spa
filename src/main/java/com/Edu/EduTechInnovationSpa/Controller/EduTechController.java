@@ -3,34 +3,18 @@ package com.Edu.EduTechInnovationSpa.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.*;
+import org.springframework.web.bind.annotation.*;
+import com.Edu.EduTechInnovationSpa.Model.*;
+import com.Edu.EduTechInnovationSpa.Service.*;
 
-import com.Edu.EduTechInnovationSpa.Model.Asignatura;
-import com.Edu.EduTechInnovationSpa.Model.Boleta;
-import com.Edu.EduTechInnovationSpa.Model.Cupon;
-import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
-import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
-import com.Edu.EduTechInnovationSpa.Model.Seccion;
-import com.Edu.EduTechInnovationSpa.Model.Usuario;
-import com.Edu.EduTechInnovationSpa.Service.AsignaturaService;
-import com.Edu.EduTechInnovationSpa.Service.BoletaService;
-import com.Edu.EduTechInnovationSpa.Service.CuponService;
-import com.Edu.EduTechInnovationSpa.Service.EvaluacionService;
-import com.Edu.EduTechInnovationSpa.Service.RolUsuarioService;
-import com.Edu.EduTechInnovationSpa.Service.SeccionService;
-import com.Edu.EduTechInnovationSpa.Service.UserService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.Operation;
+
 
 @RestController
 @RequestMapping("/api/v1/edu")
+@Tag(name = "EduTech API", description = "API for managing EduTech Innovation SPA") 
 public class EduTechController {
 
     @Autowired
@@ -64,6 +48,7 @@ public class EduTechController {
     // - - - - - - - - - - Controladores de Usuarios - - - - - - - - - -
 
     @GetMapping("/Usuarios")
+    @Operation(summary = "List all users", description = "Returns a list of all registered users in the system.")
     public ResponseEntity<List<Usuario>> ListarUsuarios() {
 
         List<Usuario> usuarios = usuarioService.getAllUsers();
@@ -74,6 +59,7 @@ public class EduTechController {
     }
 
     @GetMapping("/Usuarios/{id}")
+    @Operation(summary = "Get user by ID", description = "Returns a user by their unique ID.")
     public ResponseEntity<Usuario> ObtenerUsuario(@PathVariable Integer id) {
         Usuario usuario = usuarioService.getUserById(id);
         if (usuario == null) {
@@ -83,12 +69,14 @@ public class EduTechController {
     }
 
     @PostMapping("/Usuarios")
+    @Operation(summary = "Create a new user", description = "Creates a new user in the system with the provided details.")
     public ResponseEntity<Usuario> CrearUsuario(@RequestBody Usuario usuario) {
         Usuario nuevoUsuario = usuarioService.createUser(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
     @PutMapping("/Usuarios/{id}")
+    @Operation(summary = "Update user by ID", description = "Updates the details of an existing user by their unique ID.")
     public ResponseEntity<Usuario> ActualizarUsuario(@PathVariable Integer id, @RequestBody Usuario usuario) {
         try {
 
@@ -109,6 +97,7 @@ public class EduTechController {
     }
 
     @DeleteMapping("/Usuarios/{id}")
+    @Operation(summary = "Delete user by ID", description = "Deletes a user from the system by their unique ID.")
     public ResponseEntity<?> eliminarUsuario(@PathVariable Integer id) {
         try {
             usuarioService.deleteUser(id);
@@ -121,6 +110,7 @@ public class EduTechController {
     // - - - - - - - - - - Controladores de Seccion - - - - - - - - - -
 
     @GetMapping("/Secciones")
+    @Operation(summary = "List all sections", description = "Returns a list of all sections available in the system.")
     public ResponseEntity<List<Seccion>> ListarCursos() {
         List<Seccion> secciones = seccionService.getAllSeccions();
         if (secciones.isEmpty()) {
@@ -130,6 +120,7 @@ public class EduTechController {
     }
 
     @GetMapping("/Secciones/{id}")
+    @Operation(summary = "Get section by ID", description = "Returns a section by its unique ID.")
     public ResponseEntity<Seccion> getSecciones(@PathVariable int id) {
         Seccion seccion = seccionService.getSeccionById(id);
         if (seccion == null) {
@@ -140,12 +131,14 @@ public class EduTechController {
     }
 
     @PostMapping("/Seccion")
+    @Operation(summary = "Create a new section", description = "Creates a new section with the provided details.")
     public ResponseEntity<Seccion> CrearSeccion(@RequestBody Seccion seccion) {
         Seccion newSeccion = seccionService.createSeccion(seccion);
         return ResponseEntity.status(HttpStatus.CREATED).body(newSeccion);
     }
 
     @PostMapping("/Seccion/{id}")
+    @Operation(summary = "Update section by ID", description = "Updates the details of an existing section by its unique ID.")
     public ResponseEntity<Seccion> updateSeccion(@PathVariable int id, @RequestBody Seccion seccion) {
         try {
 
@@ -164,6 +157,7 @@ public class EduTechController {
     }
 
     @DeleteMapping("/Seccion/{id}")
+    @Operation(summary = "Delete section by ID", description = "Deletes a section from the system by its unique ID.")
     public ResponseEntity<?> eliminarSeccion(@PathVariable int id) {
         try {
             seccionService.deleteSeccion(id);
@@ -176,6 +170,7 @@ public class EduTechController {
     // - - - - - - - - - - Controladores de Cupon - - - - - - - - - -
 
     @GetMapping("/Cupon")
+    @Operation(summary = "List all coupons", description = "Returns a list of all available coupons in the system.")
     public ResponseEntity<List<Cupon>> ListarCupones() {
         List<Cupon> cupones = cuponService.getAllCupons();
         if (cupones.isEmpty()) {
@@ -187,6 +182,7 @@ public class EduTechController {
     // --------Controlador RolUsuario
 
     @GetMapping("/RolUsuario")
+    @Operation(summary = "List all user roles", description = "Returns a list of all user roles defined in the system.")
     public ResponseEntity<List<RolUsuario>> ListarRoles() {
         List<RolUsuario> rolUsuarios = rolUsuarioService.getAllRoles();
         if (rolUsuarios.isEmpty()) {
@@ -197,6 +193,7 @@ public class EduTechController {
     }
 
     @GetMapping("/RolUsuario/{id}")
+    @Operation(summary = "Get user role by ID", description = "Returns a user role by its unique ID.")
     public ResponseEntity<RolUsuario> obtenerRolUsuario(@PathVariable Integer id) {
         RolUsuario rolUsuario = rolUsuarioService.getRolById(id);
         if (rolUsuario == null) {
@@ -206,12 +203,14 @@ public class EduTechController {
     }
 
     @PostMapping("/RolUsuario")
+    @Operation(summary = "Create a new user role", description = "Creates a new user role with the provided details.")
     public ResponseEntity<RolUsuario> CrearRol(@RequestBody RolUsuario rolUsuario) {
         RolUsuario nuevoRolUsuario = rolUsuarioService.createRol(rolUsuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoRolUsuario);
     }
 
     @PostMapping("/RolUsuario/{id}")
+    @Operation(summary = "Update user role by ID", description = "Updates the details of an existing user role by its unique ID.")
     public ResponseEntity<RolUsuario> ActualizarRol(@PathVariable Integer id, @RequestBody RolUsuario rolUsuario) {
         try {
 
@@ -229,6 +228,7 @@ public class EduTechController {
     }
 
     @DeleteMapping("/RolUsuario/{id}")
+    @Operation(summary = "Delete user role by ID", description = "Deletes a user role from the system by its unique ID.")
     public ResponseEntity<?> eliminarRol(@PathVariable Integer id) {
         try {
             rolUsuarioService.deleteRol(id);
@@ -240,6 +240,7 @@ public class EduTechController {
     // ------- Controlador Evaluacion
 
     @GetMapping("/Evaluacion")
+    @Operation(summary = "List all evaluations", description = "Returns a list of all evaluations available in the system.")
     public ResponseEntity<List<Evaluacion>> ListarEvaluacion() {
         List<Evaluacion> evaluaciones = evaluacionService.getAllEvaluacion();
         if (evaluaciones.isEmpty()) {
@@ -249,6 +250,7 @@ public class EduTechController {
     }
 
     @GetMapping("/Evaluacion/{id}")
+    @Operation(summary = "Get evaluation by ID", description = "Returns an evaluation by its unique ID.")
     public ResponseEntity<Evaluacion> obtenerEvaluacion(@PathVariable Integer id) {
         Evaluacion evaluacion = evaluacionService.getEvaluacionById(id);
         if (evaluacion == null) {
@@ -258,27 +260,37 @@ public class EduTechController {
     }
 
     @PostMapping("/{id_user}/Evaluacion")
+    @Operation(summary = "Create a new evaluation", description = "Creates a new evaluation with the provided details.")
     public ResponseEntity<Evaluacion> CrearEvaluacion(@PathVariable Integer id_user, @RequestBody Evaluacion evaluacion) {
         
-        Usuario usuario = usuarioService.getUserById(id_user);
-        if (usuario == null) {
+        if(!usuarioService.userExist(id_user)){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         
         // verificar que el usuario tenga rol de administrador o docente
-        if (!usuario.getRol().getNombre_rol().equals("Administrador") || !usuario.getRol().getNombre_rol().equals("Docente")) {
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
+        }  
         
         Evaluacion nuevaEvaluacion = evaluacionService.createEvaluacion(evaluacion);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaEvaluacion);
     }
 
-    @PostMapping("/Evaluacion/{id}")
-    public ResponseEntity<Evaluacion> ActualizarRol(@PathVariable Integer id, @RequestBody Evaluacion evaluacion) {
+    @PostMapping("/{id_user}/Evaluacion/{id}")
+    @Operation(summary = "Update evaluation by ID", description = "Updates the details of an existing evaluation by its unique ID.")
+    public ResponseEntity<Evaluacion> ActualizarRol(@PathVariable Integer id_user, @PathVariable Integer id_evaluacion, @RequestBody Evaluacion evaluacion) {
         try {
-
-            Evaluacion eva = evaluacionService.getEvaluacionById(id);
+        
+        if(!usuarioService.userExist(id_user)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        
+        // verificar que el usuario tenga rol de administrador o docente
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }  
+        
+            Evaluacion eva = evaluacionService.getEvaluacionById(id_evaluacion);
 
             eva.setId_evaluacion(evaluacion.getId_evaluacion());
             eva.setTitulo(evaluacion.getTitulo());
@@ -292,10 +304,21 @@ public class EduTechController {
         }
     }
 
-    @DeleteMapping("/Evaluacion/{id}")
-    public ResponseEntity<?> eliminarEvaluacion(@PathVariable Integer id) {
+    @DeleteMapping("/{id_user}/Evaluacion/{id}")
+    @Operation(summary = "Delete evaluation by ID", description = "Deletes an evaluation from the system by its unique ID.")
+    public ResponseEntity<?> eliminarEvaluacion(@PathVariable Integer id_user, @PathVariable Integer id_evaluacion) {
         try {
-            evaluacionService.deleteEvaluacion(id);
+        
+        if(!usuarioService.userExist(id_user)){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        
+        // verificar que el usuario tenga rol de administrador o docente
+        if(!usuarioService.getUserRole(id_user).equals("Administrador") || !usuarioService.getUserRole(id_user).equals("Docente")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        } 
+            
+            evaluacionService.deleteEvaluacion(id_evaluacion);
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -305,6 +328,7 @@ public class EduTechController {
     /// --------Controlador asignatura ( Actualizados )
 
     @GetMapping("/Asignatura")
+    @Operation(summary = "List all subjects", description = "Returns a list of all subjects available in the system.")
     public ResponseEntity<List<Asignatura>> ListarAsignatura() {
         List<Asignatura> asignaturas = asignaturaService.getAllAsignaturas();
         if (asignaturas.isEmpty()) {
@@ -314,6 +338,7 @@ public class EduTechController {
     }
 
     @GetMapping("/Asignatura/{id}")
+    @Operation(summary = "Get subject by ID", description = "Returns a subject by its unique ID.")
     public ResponseEntity<Asignatura> getAsignatura(@PathVariable Integer id) {
         Asignatura asignatura = asignaturaService.getAsignaturaById(id);
         if (asignatura == null) {
@@ -323,6 +348,7 @@ public class EduTechController {
     }
 
     @PostMapping("/{id_user}/Asignatura")
+    @Operation(summary = "Create a new subject", description = "Creates a new subject with the provided details.")
     public ResponseEntity<Asignatura> CrearAsignatura(@PathVariable Integer id_user, @RequestBody Asignatura asignatura) {
         Usuario usuario = usuarioService.getUserById(id_user);
         if (usuario == null) {
@@ -337,6 +363,7 @@ public class EduTechController {
     }
 
     @PostMapping("/{id_user}/Asignatura/{id_asignatura}")
+    @Operation(summary = "Update subject by ID", description = "Updates the details of an existing subject by its unique ID.")
     public ResponseEntity<Asignatura> ActualizarAsignatura(@PathVariable Integer id_user, @PathVariable Integer id_asignatura, @RequestBody Asignatura asignatura) {
         try {
 
@@ -363,6 +390,7 @@ public class EduTechController {
     }
 
     @DeleteMapping("/{id_user}/Asignatura/{id_asignatura}")
+    @Operation(summary = "Delete subject by ID", description = "Deletes a subject from the system by its unique ID.")
     public ResponseEntity<?> eliminarAsignatura(@PathVariable Integer id_user, @PathVariable Integer id_asignatura) {
         try {
 
@@ -388,6 +416,7 @@ public class EduTechController {
     
 
     @GetMapping("/Boleta")
+    @Operation(summary = "List all tickets", description = "Returns a list of all tickets (boletas) issued in the system.")
     public ResponseEntity<List<Boleta>> ListarBoletas() {
         List<Boleta> boletas = boletaService.getAllBoletas();
         if (boletas.isEmpty()) {
@@ -396,8 +425,8 @@ public class EduTechController {
         return ResponseEntity.ok(boletas);
     }
 
-
     @GetMapping("/Boleta/{id}")
+    @Operation(summary = "Get ticket by ID", description = "Returns a ticket (boleta) by its unique ID.")
     public ResponseEntity<Boleta> ObtenerBoleta(@PathVariable Integer id) {
         Boleta boleta = boletaService.getBoletaById(id);
         if (boleta == null) {
@@ -407,6 +436,7 @@ public class EduTechController {
     }       
 
     @PostMapping("/Boleta") 
+    @Operation(summary = "Create a new ticket", description = "Creates a new ticket (boleta) with the provided details.")
     public ResponseEntity<Boleta> CrearBoleta(@RequestBody Boleta boleta) {
         Boleta nuevaBoleta = boletaService.createBoleta(boleta);
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevaBoleta);
@@ -414,6 +444,7 @@ public class EduTechController {
 
 
     @PostMapping("/Boleta/{id}")
+    @Operation(summary = "Update ticket by ID", description = "Updates the details of an existing ticket (boleta) by its unique ID.")
     public ResponseEntity<Boleta> ActualizarBoleta(@PathVariable Integer id, @RequestBody Boleta boleta) {
         try {
 
@@ -433,6 +464,7 @@ public class EduTechController {
     }
 
     @DeleteMapping("/Boleta/{id}")
+    @Operation(summary = "Delete ticket by ID", description = "Deletes a ticket (boleta) from the system by its unique ID.")
     public ResponseEntity<?> eliminarBoleta(@PathVariable Integer id) {
         try {
             boletaService.deleteBoleta(id);
@@ -441,10 +473,5 @@ public class EduTechController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    
-
-
-
 
 }

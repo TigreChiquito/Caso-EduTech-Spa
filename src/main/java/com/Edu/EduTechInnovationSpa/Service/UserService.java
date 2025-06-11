@@ -41,4 +41,12 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
+    public boolean userExist(Integer id){
+        Usuario usuario = getUserById(id);
+        if (usuario == null) {
+            return false;
+        }
+        return true;
+    }
+
 }
