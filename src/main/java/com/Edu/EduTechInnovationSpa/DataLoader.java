@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.Edu.EduTechInnovationSpa.Model.Asignatura;
 import com.Edu.EduTechInnovationSpa.Model.Cupon;
+import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
+import com.Edu.EduTechInnovationSpa.Model.Nota;
 import com.Edu.EduTechInnovationSpa.Model.Recurso;
 import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
 import com.Edu.EduTechInnovationSpa.Model.Seccion;
@@ -76,6 +78,8 @@ public class DataLoader implements CommandLineRunner {
         
     }
     
+    
+    
 
     List<RolUsuario> roles = rolUsuarioRepository.findAll();
 
@@ -112,7 +116,6 @@ public class DataLoader implements CommandLineRunner {
         .filter(u -> u.getRol() != null && u.getRol().getNombre_rol().equals("Profesor"))
         .toList();
 
-    //  Asignaturas
     List<Asignatura> asignaturas = asignaturaRepository.findAll();
 
     for (int i = 0; i < 5; i++) {
@@ -151,6 +154,7 @@ public class DataLoader implements CommandLineRunner {
     // recursos
     for (int i = 0; i < 5; i++) {
         Recurso recurso = new Recurso();
+        recurso.setId_recurso(i + 1);
         recurso.setNombre(faker.book().title());
         recurso.setVinculo_recurso(faker.internet().url());
         java.util.Date fechaRecurso = faker.date().past(30, TimeUnit.DAYS);
@@ -163,8 +167,48 @@ public class DataLoader implements CommandLineRunner {
     }
 
 
-        }
+    
 
+
+    //rol usuarios
+    for (int i = 0; i < 5; i++) {
+        Nota nota = new Nota();
+        nota.setId_nota(i+1);
+        nota.setNota(faker.number().numberBetween(0, 70));
+        nota.setDescripcion("Nota" +nota.getId_nota());
+
+        notaRepository.save(nota);
+        
+    }
+    
+    List<Usuario> usuarios = userRepository.findAll();
+    List<Nota> notas = notaRepository.findAll();
+    List<Seccion> secciones = seccionRepository.findAll();
+
+
+    //evaluacion
+    for (int i = 0; i < 5; i++) {
+        Evaluacion evaluacion = new Evaluacion();
+
+        evaluacion.setTitulo(faker.book().title());
+        java.util.Date fechaEvaluacion = faker.date().future(15, TimeUnit.DAYS);
+        evaluacion.setFechaEva(new java.sql.Date(fechaEvaluacion.getTime()));
+        evaluacion.setDescripcionEva(faker.lorem().sentence(10));
+        evaluacion.setPuntajeMax(faker.number().numberBetween(00,  100));
+
+        Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
+        evaluacion.setId_usuario(usuario);
+
+        Nota nota = notas.get(random.nextInt(notas.size()));
+        evaluacion.setId_Nota(nota);
+
+        Seccion seccion = secciones.get(random.nextInt(secciones.size()));
+        evaluacion.setIdSeccion(seccion);
+
+        evaluacionRepository.save(evaluacion);
+
+    
+}
 }
 
 
