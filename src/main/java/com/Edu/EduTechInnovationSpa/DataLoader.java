@@ -170,19 +170,7 @@ public class DataLoader implements CommandLineRunner {
     
 
 
-    //rol usuarios
-    for (int i = 0; i < 5; i++) {
-        Nota nota = new Nota();
-        nota.setId_nota(i+1);
-        nota.setNota(faker.number().numberBetween(0, 70));
-        nota.setDescripcion("Nota" +nota.getId_nota());
-
-        notaRepository.save(nota);
-        
-    }
-    
     List<Usuario> usuarios = userRepository.findAll();
-    List<Nota> notas = notaRepository.findAll();
     List<Seccion> secciones = seccionRepository.findAll();
 
 
@@ -195,12 +183,11 @@ public class DataLoader implements CommandLineRunner {
         evaluacion.setFechaEva(new java.sql.Date(fechaEvaluacion.getTime()));
         evaluacion.setDescripcionEva(faker.lorem().sentence(10));
         evaluacion.setPuntajeMax(faker.number().numberBetween(00,  100));
+        evaluacion.setPuntajeObt(faker.number().numberBetween(00,  evaluacion.getPuntajeMax()));
 
         Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
         evaluacion.setId_usuario(usuario);
 
-        Nota nota = notas.get(random.nextInt(notas.size()));
-        evaluacion.setId_Nota(nota);
 
         Seccion seccion = secciones.get(random.nextInt(secciones.size()));
         evaluacion.setIdSeccion(seccion);

@@ -1,10 +1,18 @@
 package com.Edu.EduTechInnovationSpa.Model;
 
-import jakarta.persistence.*;
+import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
 
 @Entity
 @Table(name = "Evaluacion")
@@ -27,14 +35,13 @@ public class Evaluacion {
 
     @Column(name = "PuntajeMax", nullable = false)
     private int PuntajeMax;
+    
+    @Column(name = "PuntajeObtenido", nullable = false)
+    private int PuntajeObt;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_user", nullable = false)
     private Usuario id_usuario;
-
-    @ManyToOne
-    @JoinColumn(name = "id_Nota", referencedColumnName = "id_nota", nullable = false)
-    private Nota id_Nota;
 
     @ManyToOne
     @JoinColumn(name = "idSeccion", referencedColumnName = "id_seccion", nullable = false)
