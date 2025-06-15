@@ -9,11 +9,10 @@ import com.Edu.EduTechInnovationSpa.Model.*;
 import com.Edu.EduTechInnovationSpa.Service.*;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping("/api/v1/edu/recurso")
-@Tag(name = "EduTech API: Recurso", description = "API for managing resources of EduTech Innovation SPA") 
+@Tag(name = "EduTech API: Recurso", description = "API for managing resources of EduTech Innovation SPA")
 public class RecursoController {
 
     @Autowired
@@ -28,31 +27,31 @@ public class RecursoController {
     }
 
     @GetMapping("/Recurso")
-    public ResponseEntity<List<Recurso>> ListarRecursos(){
+    public ResponseEntity<List<Recurso>> ListarRecursos() {
         List<Recurso> recurso = recursoService.getAllRecursos();
-        if(recurso.isEmpty()){
+        if (recurso.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(recurso);
     }
 
     @GetMapping("/Recurso/{id}")
-    public ResponseEntity<Recurso> ObtenerRecurso(@PathVariable Integer id){
+    public ResponseEntity<Recurso> ObtenerRecurso(@PathVariable Integer id) {
         Recurso recurso = recursoService.getRecursoById(id);
-        if(recurso == null){
+        if (recurso == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(recurso);
     }
 
     @PostMapping("/{id_user}/Recurso")
-    public ResponseEntity<Recurso> CrearRecurso(@PathVariable Integer id_user, @RequestBody Recurso recurso){
+    public ResponseEntity<Recurso> CrearRecurso(@PathVariable Integer id_user, @RequestBody Recurso recurso) {
 
-        if(!usuarioService.userExist(id_user)){
+        if (!usuarioService.userExist(id_user)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        if(!usuarioService.getUserRole(id_user).equals("Docente")){
+        if (!usuarioService.getUserRole(id_user).equals("Docente")) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
 
@@ -61,30 +60,31 @@ public class RecursoController {
     }
 
     @PostMapping("/{id_user}/Recurso/{id_recurso}")
-    public ResponseEntity<Recurso> ActualizarRecurso(@PathVariable Integer id_user, @PathVariable Integer id_recurso, @RequestBody Recurso recurso){
+    public ResponseEntity<Recurso> ActualizarRecurso(@PathVariable Integer id_user, @PathVariable Integer id_recurso,
+            @RequestBody Recurso recurso) {
 
-        try{
+        try {
 
-        if(!usuarioService.userExist(id_user)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+            if (!usuarioService.userExist(id_user)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
 
-        if(!usuarioService.getUserRole(id_user).equals("Docente")){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
+            if (!usuarioService.getUserRole(id_user).equals("Docente")) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            }
 
-        Recurso recu = recursoService.getRecursoById(id_recurso);
+            Recurso recu = recursoService.getRecursoById(id_recurso);
 
-        recu.setId_recurso(recurso.getId_recurso());
-        recu.setId_asignatura(recurso.getId_asignatura());
-        recu.setNombre(recurso.getNombre());
-        recu.setFecha(recurso.getFecha());
-        recu.setVinculo_recurso(recurso.getVinculo_recurso());
+            recu.setId_recurso(recurso.getId_recurso());
+            recu.setId_asignatura(recurso.getId_asignatura());
+            recu.setNombre(recurso.getNombre());
+            recu.setFecha(recurso.getFecha());
+            recu.setVinculo_recurso(recurso.getVinculo_recurso());
 
-        Recurso recuAct = recursoService.createRecurso(recurso);
-        return ResponseEntity.ok(recuAct);
+            Recurso recuAct = recursoService.createRecurso(recurso);
+            return ResponseEntity.ok(recuAct);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             return ResponseEntity.notFound().build();
 
@@ -93,22 +93,23 @@ public class RecursoController {
     }
 
     @DeleteMapping("/{id_user}/Recurso/{id_recurso}")
-    public ResponseEntity<?> eliminarRecurso(@PathVariable Integer id_user, @PathVariable Integer id_recurso, @RequestBody Recurso recurso){
+    public ResponseEntity<?> eliminarRecurso(@PathVariable Integer id_user, @PathVariable Integer id_recurso,
+            @RequestBody Recurso recurso) {
 
-        try{
+        try {
 
-            if(!usuarioService.userExist(id_user)){
+            if (!usuarioService.userExist(id_user)) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
 
-            if(!usuarioService.getUserRole(id_user).equals("Docente")){
+            if (!usuarioService.getUserRole(id_user).equals("Docente")) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
             }
 
             recursoService.deleteRecurso(id_recurso);
             return ResponseEntity.noContent().build();
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
             return ResponseEntity.notFound().build();
 
