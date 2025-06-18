@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.Edu.EduTechInnovationSpa.Model.Asignatura;
+import com.Edu.EduTechInnovationSpa.Model.Boleta;
 import com.Edu.EduTechInnovationSpa.Model.Cupon;
 import com.Edu.EduTechInnovationSpa.Model.Evaluacion;
-import com.Edu.EduTechInnovationSpa.Model.Nota;
 import com.Edu.EduTechInnovationSpa.Model.Recurso;
 import com.Edu.EduTechInnovationSpa.Model.RolUsuario;
 import com.Edu.EduTechInnovationSpa.Model.Seccion;
@@ -23,7 +23,6 @@ import com.Edu.EduTechInnovationSpa.Repository.AsignaturaRepository;
 import com.Edu.EduTechInnovationSpa.Repository.BoletaRepository;
 import com.Edu.EduTechInnovationSpa.Repository.CuponRepository;
 import com.Edu.EduTechInnovationSpa.Repository.EvaluacionRepository;
-import com.Edu.EduTechInnovationSpa.Repository.NotaRepository;
 import com.Edu.EduTechInnovationSpa.Repository.RecursoRepository;
 import com.Edu.EduTechInnovationSpa.Repository.RolUsuarioRepository;
 import com.Edu.EduTechInnovationSpa.Repository.SeccionRepository;
@@ -49,8 +48,6 @@ public class DataLoader implements CommandLineRunner {
     private SeccionRepository seccionRepository;
     @Autowired
     private EvaluacionRepository evaluacionRepository;
-    @Autowired
-    private NotaRepository notaRepository;
     @Autowired
     private BoletaRepository boletaRepository;
     @Autowired
@@ -172,6 +169,7 @@ public class DataLoader implements CommandLineRunner {
 
     List<Usuario> usuarios = userRepository.findAll();
     List<Seccion> secciones = seccionRepository.findAll();
+    List<Cupon> cupones = cuponRepository.findAll();
 
 
     //evaluacion
@@ -195,7 +193,32 @@ public class DataLoader implements CommandLineRunner {
         evaluacionRepository.save(evaluacion);
 
     
-}
-}
+    }
+    //boleta
+    for (int i = 0; i < 5; i++) {
+        Boleta boleta = new Boleta();
 
+        
+
+        Usuario usuario = usuarios.get(random.nextInt(usuarios.size()));
+        boleta.setUsuario(usuario);
+
+        Asignatura asignatura = asignaturas.get(random.nextInt(asignaturas.size()));
+        boleta.setAsignatura(asignatura);
+
+        java.util.Date fechaBoleta = new java.util.Date();
+        boleta.setFecha(fechaBoleta);
+
+        Cupon cupon = cupones.get(random.nextInt(cupones.size()));
+        boleta.setCupon(cupon);
+        
+        boleta.setMonto_total(asignatura.getCosto() * cupon.getDiscount() / 100);
+        boletaRepository.save(boleta);
+
+    
+
+
+}
+}
+}
 

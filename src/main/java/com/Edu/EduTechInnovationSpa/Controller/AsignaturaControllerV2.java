@@ -34,7 +34,7 @@ public class AsignaturaControllerV2 {
                 linkTo(methodOn(AsignaturaControllerV2.class).getAllAsignaturas()).withSelfRel());
     }
 
-    @GetMapping(value = "/{id)}", produces = MediaTypes.HAL_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public EntityModel<Asignatura> getAsignaturaById(@PathVariable Integer id) {
         Asignatura asignatura = asignaturaService.getAsignaturaById(id);
         return assembler.toModel(asignatura);
