@@ -30,7 +30,7 @@ import com.Edu.EduTechInnovationSpa.Repository.UserRepository;
 
 import net.datafaker.Faker;
 
-@Profile("dev")
+@Profile("test")
 @Component
 
 public class DataLoader implements CommandLineRunner {
