@@ -21,7 +21,7 @@ import com.Edu.EduTechInnovationSpa.Model.Usuario;
 import com.Edu.EduTechInnovationSpa.Repository.UserRepository;
 import com.Edu.EduTechInnovationSpa.Service.UserService;
 
-@SpringBootTest
+@SpringBootTest (properties = "spring.config.location=classpath:application-test.properties")
 public class UserServiceTest {
 
     @Autowired
